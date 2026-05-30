@@ -1,0 +1,494 @@
+/* ==========================================================================
+   PLANET PLUNDER - Case Study Page Styles
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   01. Hero Banner with Full-Width Video
+   -------------------------------------------------------------------------- */
+.pp-hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: flex-end;
+    padding-top: var(--header-height);
+    padding-bottom: 80px;
+    overflow: hidden;
+}
+
+.pp-hero-video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.pp-hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pp-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(7, 7, 10, 0.3) 0%,
+        rgba(7, 7, 10, 0.6) 50%,
+        rgba(7, 7, 10, 0.95) 100%
+    );
+}
+
+html[data-theme="light"] .pp-hero-overlay {
+    background: linear-gradient(
+        180deg,
+        rgba(244, 246, 250, 0.3) 0%,
+        rgba(244, 246, 250, 0.6) 50%,
+        rgba(244, 246, 250, 0.95) 100%
+    );
+}
+
+.pp-hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+.pp-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 24px;
+    transition: color var(--transition-fast);
+}
+
+.pp-back-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+.pp-back-link:hover {
+    color: var(--accent-primary);
+}
+
+.pp-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 6px 16px;
+    border-radius: var(--radius-full);
+    background: rgba(16, 185, 129, 0.08);
+    margin-bottom: 20px;
+}
+
+.pp-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.pp-hero-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.pp-hero-description {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin-bottom: 24px;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.pp-hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pp-hero-tags span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent-primary);
+    background: rgba(6, 182, 212, 0.08);
+    padding: 5px 14px;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   02. Shared Section Spacing
+   -------------------------------------------------------------------------- */
+.pp-section {
+    padding: 100px 0;
+    position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   03. Overview Grid
+   -------------------------------------------------------------------------- */
+.pp-overview-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.pp-overview-text p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+.pp-overview-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pp-stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    transition: all var(--transition-fast);
+}
+
+.pp-stat-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-primary);
+    background: var(--card-hover-bg);
+}
+
+.pp-stat-icon {
+    color: var(--accent-primary);
+    margin-bottom: 12px;
+}
+
+.pp-stat-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.pp-stat-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.pp-stat-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   04. Feature Content (Procedural Gen / Skill Tree)
+   -------------------------------------------------------------------------- */
+.pp-feature-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.pp-feature-reverse {
+    direction: rtl;
+}
+
+.pp-feature-reverse > * {
+    direction: ltr;
+}
+
+.pp-feature-text h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.pp-feature-text p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+.pp-feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.pp-feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.93rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.pp-feature-list li svg {
+    width: 18px;
+    height: 18px;
+    color: var(--accent-primary);
+    flex-shrink: 0;
+}
+
+/* Feature Media (Image / Video placeholder) */
+.pp-feature-media {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pp-media-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.pp-feature-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.pp-media-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   05. Gallery Grid
+   -------------------------------------------------------------------------- */
+.pp-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.pp-gallery-item {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.pp-gallery-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.pp-gallery-wide {
+    grid-column: span 2;
+}
+
+.pp-gallery-video,
+.pp-gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.pp-gallery-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   06. Technical Details Grid
+   -------------------------------------------------------------------------- */
+.pp-tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.pp-tech-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    text-align: center;
+    transition: all var(--transition-fast);
+}
+
+.pp-tech-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-primary);
+    background: var(--card-hover-bg);
+}
+
+.pp-tech-icon {
+    color: var(--accent-primary);
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.pp-tech-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.pp-tech-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.pp-tech-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   07. CTA Section
+   -------------------------------------------------------------------------- */
+.pp-cta-section {
+    text-align: center;
+}
+
+.pp-cta-wrapper {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.pp-cta-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.pp-cta-description {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    font-weight: 300;
+    line-height: 1.7;
+}
+
+.pp-cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   08. Responsive Adjustments
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .pp-overview-grid,
+    .pp-feature-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .pp-feature-reverse {
+        direction: ltr;
+    }
+
+    .pp-tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pp-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pp-gallery-wide {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .pp-hero {
+        min-height: 70vh;
+        padding-bottom: 60px;
+    }
+
+    .pp-section {
+        padding: 70px 0;
+    }
+
+    .pp-tech-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pp-gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pp-gallery-wide {
+        grid-column: span 1;
+    }
+}

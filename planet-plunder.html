@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Plunder | Jerrel Martha</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Planet Plunder | Jerrel Martha">
+    <meta name="description" content="Planet Plunder — an action-exploration game featuring procedural world generation, a branching skill tree, and dynamic resource gathering. By Jerrel Martha.">
+    <meta name="author" content="Jerrel Martha">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="planet-plunder.css">
+</head>
+<body>
+    <!-- Interactive Background Particles -->
+    <div class="background-canvas-wrapper">
+        <canvas id="particle-canvas"></canvas>
+    </div>
+
+    <!-- Floating Navigation Bar -->
+    <header class="header" id="header">
+        <div class="nav-container">
+            <a href="index.html#hero" class="logo" id="nav-logo">
+                <span class="logo-accent">&lt;</span>JM<span class="logo-accent"> /&gt;</span>
+            </a>
+
+            <nav class="nav-links-wrapper" id="nav-menu">
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#skills" class="nav-link">Skills</a>
+                <a href="index.html#projects" class="nav-link active">Projects</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle visual theme" title="Toggle visual theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="index.html#contact" class="btn btn-outline nav-btn">Let's Connect</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" title="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Banner -->
+        <section class="pp-hero" id="pp-hero">
+            <div class="pp-hero-video-wrapper">
+                <video class="pp-hero-video" autoplay loop muted playsinline>
+                    <source src="assets/planet-plunder.mp4" type="video/mp4">
+                </video>
+                <div class="pp-hero-overlay"></div>
+            </div>
+            <div class="container pp-hero-content">
+                <a href="index.html#projects" class="pp-back-link animate-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Projects
+                </a>
+                <div class="pp-hero-badge animate-item">
+                    <span class="pp-status-dot"></span>
+                    In Development
+                </div>
+                <h1 class="pp-hero-title animate-item">
+                    Planet <span class="gradient-text">Plunder</span>
+                </h1>
+                <p class="pp-hero-description animate-item">
+                    An action-exploration game featuring procedurally generated planets, a branching player skill tree, and dynamic resource gathering.
+                </p>
+                <div class="pp-hero-tags animate-item">
+                    <span>C#</span>
+                    <span>Unity</span>
+                    <span>Procedural Generation</span>
+                    <span>Skill Tree</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section class="pp-section scroll-reveal" id="pp-overview">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">01. Overview</span>
+                    <h2 class="section-title">What is Planet Plunder?</h2>
+                    <div class="section-bar"></div>
+                </div>
+
+                <div class="pp-overview-grid">
+                    <div class="pp-overview-text">
+                        <p>
+                            Planet Plunder is a game where players explore procedurally generated planets in search of valuable resources, ancient artifacts, and hidden challenges. Each planet is uniquely constructed at runtime, meaning no two expeditions are ever the same.
+                        </p>
+                        <p>
+                            The core gameplay loop revolves around landing on a planet, navigating its terrain, gathering materials, and investing earned progress into a deep skill tree system that unlocks new abilities, upgrades, and exploration strategies.
+                        </p>
+                        <p>
+                            The game is currently under active development as a personal project, showcasing my skills in gameplay programming, procedural content generation, and systems architecture within Unity.
+                        </p>
+                    </div>
+                    <div class="pp-overview-stats">
+                        <div class="pp-stat-card">
+                            <div class="pp-stat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                </svg>
+                            </div>
+                            <h4>Procedural Worlds</h4>
+                            <p>Every planet is generated at runtime with unique biomes, terrain, and resource layouts</p>
+                        </div>
+                        <div class="pp-stat-card">
+                            <div class="pp-stat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </div>
+                            <h4>Skill Tree System</h4>
+                            <p>Branching upgrade paths that let players specialize their exploration and combat style</p>
+                        </div>
+                        <div class="pp-stat-card">
+                            <div class="pp-stat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="16 18 22 12 16 6"></polyline>
+                                    <polyline points="8 6 2 12 8 18"></polyline>
+                                </svg>
+                            </div>
+                            <h4>Built in Unity</h4>
+                            <p>Developed in C# using Unity's rendering pipeline and custom editor tools</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Procedural Generation Section -->
+        <section class="pp-section scroll-reveal" id="pp-procgen">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">02. Core Feature</span>
+                    <h2 class="section-title">Procedural Generation</h2>
+                    <div class="section-bar center"></div>
+                </div>
+
+                <div class="pp-feature-content">
+                    <div class="pp-feature-text">
+                        <h3>Every Planet Tells a Different Story</h3>
+                        <p>
+                            The procedural generation system creates unique planetary surfaces by layering noise algorithms, biome distribution rules, and resource placement logic. Terrain elevation, vegetation density, hazard zones, and points of interest are all determined algorithmically at runtime.
+                        </p>
+                        <ul class="pp-feature-list">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Multi-layered noise-based terrain generation
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Dynamic biome placement with smooth transitions
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Randomized resource scattering and loot tables
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Seed-based reproducibility for shared planet codes
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pp-feature-media">
+                        <!-- Replace src with your actual screenshot or video -->
+                        <div class="pp-media-placeholder">
+                            <img src="assets/planet-plunder-procgen.png" alt="Procedural generation in Planet Plunder showing terrain and biome variety" class="pp-feature-image">
+                        </div>
+                        <span class="pp-media-caption">Procedurally generated terrain with biome variations</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skill Tree Section -->
+        <section class="pp-section scroll-reveal" id="pp-skilltree">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">03. Core Feature</span>
+                    <h2 class="section-title">Skill Tree System</h2>
+                    <div class="section-bar center"></div>
+                </div>
+
+                <div class="pp-feature-content pp-feature-reverse">
+                    <div class="pp-feature-text">
+                        <h3>Shape Your Playstyle</h3>
+                        <p>
+                            The skill tree provides meaningful progression choices. As players complete expeditions and earn experience, they unlock nodes across multiple branches — each focusing on different gameplay pillars like traversal, combat efficiency, resource detection, and survival.
+                        </p>
+                        <ul class="pp-feature-list">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Multiple branching paths with distinct specializations
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Active and passive abilities unlocked through progression
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Node dependencies and prerequisites for strategic depth
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Visual node graph rendered in-game with real-time feedback
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pp-feature-media">
+                        <!-- Replace src with your actual screenshot or video -->
+                        <div class="pp-media-placeholder">
+                            <img src="assets/planet-plunder-skilltree.png" alt="Skill tree interface in Planet Plunder showing branching upgrade paths" class="pp-feature-image">
+                        </div>
+                        <span class="pp-media-caption">Branching skill tree with multiple specialization paths</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery / Media Section -->
+        <section class="pp-section scroll-reveal" id="pp-gallery">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">04. Gallery</span>
+                    <h2 class="section-title">Screenshots & Gameplay</h2>
+                    <div class="section-bar center"></div>
+                </div>
+
+                <div class="pp-gallery-grid">
+                    <!-- Gallery Item 1: Video -->
+                    <div class="pp-gallery-item pp-gallery-wide">
+                        <video class="pp-gallery-video" autoplay loop muted playsinline>
+                            <source src="assets/planet-plunder.mp4" type="video/mp4">
+                        </video>
+                        <div class="pp-gallery-label">Gameplay Footage</div>
+                    </div>
+
+                    <!-- Gallery Item 2: Screenshot -->
+                    <div class="pp-gallery-item">
+                        <img src="assets/planet-plunder-screenshot-1.png" alt="Planet Plunder gameplay screenshot 1" class="pp-gallery-image">
+                        <div class="pp-gallery-label">Exploration</div>
+                    </div>
+
+                    <!-- Gallery Item 3: Screenshot -->
+                    <div class="pp-gallery-item">
+                        <img src="assets/planet-plunder-screenshot-2.png" alt="Planet Plunder gameplay screenshot 2" class="pp-gallery-image">
+                        <div class="pp-gallery-label">Resource Gathering</div>
+                    </div>
+
+                    <!-- Gallery Item 4: Screenshot -->
+                    <div class="pp-gallery-item">
+                        <img src="assets/planet-plunder-screenshot-3.png" alt="Planet Plunder gameplay screenshot 3" class="pp-gallery-image">
+                        <div class="pp-gallery-label">Planet Surface</div>
+                    </div>
+
+                    <!-- Gallery Item 5: Screenshot -->
+                    <div class="pp-gallery-item">
+                        <img src="assets/planet-plunder-screenshot-4.png" alt="Planet Plunder gameplay screenshot 4" class="pp-gallery-image">
+                        <div class="pp-gallery-label">Skill Tree UI</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Details -->
+        <section class="pp-section scroll-reveal" id="pp-technical">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">05. Technical</span>
+                    <h2 class="section-title">Under the Hood</h2>
+                    <div class="section-bar center"></div>
+                </div>
+
+                <div class="pp-tech-grid">
+                    <div class="pp-tech-card">
+                        <div class="pp-tech-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+                        <h4>Engine</h4>
+                        <p>Unity 2022+ with URP rendering pipeline</p>
+                    </div>
+                    <div class="pp-tech-card">
+                        <div class="pp-tech-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                        </div>
+                        <h4>Language</h4>
+                        <p>C# with custom ScriptableObject architectures</p>
+                    </div>
+                    <div class="pp-tech-card">
+                        <div class="pp-tech-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                        </div>
+                        <h4>Patterns</h4>
+                        <p>State machines, observer pattern, object pooling</p>
+                    </div>
+                    <div class="pp-tech-card">
+                        <div class="pp-tech-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                        </div>
+                        <h4>Tools</h4>
+                        <p>Custom editor windows, data-driven configs via JSON</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="pp-section pp-cta-section scroll-reveal">
+            <div class="container pp-cta-wrapper">
+                <h2 class="pp-cta-title">Interested in Planet Plunder?</h2>
+                <p class="pp-cta-description">
+                    The game is still under active development. Feel free to reach out if you would like to discuss the technical implementation, follow the project's progress, or collaborate.
+                </p>
+                <div class="pp-cta-buttons">
+                    <a href="index.html#contact" class="btn btn-primary">Get in Touch</a>
+                    <a href="index.html#projects" class="btn btn-secondary">View Other Projects</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-accent">&lt;</span>JM<span class="logo-accent"> /&gt;</span>
+                </a>
+                <p>Designing modern, responsive experiences across the digital stack.</p>
+            </div>
+
+            <div class="footer-social-wrapper">
+                <a href="https://github.com/JerrelMartha" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="GitHub Profile">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="LinkedIn Profile">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="footer-copyright">
+                <p>&copy; 2026 Jerrel Martha. Developed with vanilla principles.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top-btn" aria-label="Back to top" title="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
