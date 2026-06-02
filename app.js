@@ -3,7 +3,7 @@
    Jerrel Martha - Portfolio Website
    ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+function initializePortfolio() {
     // --------------------------------------------------------------------------
     // 01. Theme Management System
     // --------------------------------------------------------------------------
@@ -616,8 +616,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------------------------------
-    // 11. Clickable Project Cards Engine
+    // 11. Clickable Project Cards Engine & Page Transitions
     // --------------------------------------------------------------------------
+    const overlay = document.getElementById('page-transition');
+    if (overlay) {
+        // Fade out overlay on load - guaranteed minimum duration to enjoy the animation
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+        }, 1000);
+    }
+
+    function triggerTransition(destination) {
+        if (overlay) {
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                window.location.href = destination;
+            }, 500); // Wait for transition fade (0.5s)
+        } else {
+            window.location.href = destination;
+        }
+    }
+
     const projectCards = document.querySelectorAll('.project-card[data-href]');
     projectCards.forEach(card => {
         card.addEventListener('click', (e) => {
@@ -627,8 +646,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const destination = card.getAttribute('data-href');
             if (destination) {
-                window.location.href = destination;
+                triggerTransition(destination);
             }
         });
     });
-});
+
+    // Intercept normal links for page transitions
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            // If it's an internal page link (contains .html and not opening in a new tab)
+            const isInternalHtml = href && 
+                                   (href.includes('.html') || href.startsWith('index.html')) && 
+                                   !href.startsWith('http') && 
+                                   link.target !== '_blank';
+            if (isInternalHtml) {
+                e.preventDefault();
+                triggerTransition(href);
+            }
+        });
+    });
+}
+
+// Ensure execution even if DOMContentLoaded already fired
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePortfolio);
+} else {
+    initializePortfolio();
+}

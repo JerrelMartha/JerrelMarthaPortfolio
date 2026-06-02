@@ -21,9 +21,15 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="planet-plunder.css"> <!-- Reuse case study styles -->
-    <link rel="stylesheet" href="spell-controller.css"> <!-- Project specific sandbox styles -->
 </head>
 <body>
+    <!-- Global Page Transition Overlay -->
+    <div class="page-transition-overlay" id="page-transition">
+        <div class="loader-logo">
+            <span class="logo-accent">&lt;</span>JM<span class="logo-accent"> /&gt;</span>
+        </div>
+        <div class="loader-progress"></div>
+    </div>
     <!-- Interactive Background Particles -->
     <div class="background-canvas-wrapper">
         <canvas id="particle-canvas"></canvas>
@@ -75,7 +81,7 @@
     <main>
         <!-- Hero Banner -->
         <section class="pp-hero" id="pp-hero">
-            <div class="pp-hero-video-wrapper" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.45) 0%, rgba(59, 130, 246, 0.45) 100%), #050508;">
+            <div class="pp-hero-video-wrapper" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.45) 0%, rgba(59, 130, 246, 0.45) 100%), url('assets/Images/spell-controller.png') center/cover no-repeat, #050508;">
                 <div class="pp-hero-overlay"></div>
             </div>
             <div class="container pp-hero-content">
@@ -86,21 +92,21 @@
                     </svg>
                     Back to Projects
                 </a>
-                <div class="pp-hero-badge animate-item" style="color: var(--accent-primary); border-color: rgba(6, 182, 212, 0.3); background: rgba(6, 182, 212, 0.08);">
-                    <span class="pp-status-dot" style="background: var(--accent-primary);"></span>
-                    Active Sandbox Simulation
+                <div class="pp-hero-badge animate-item" style="color: #ff9800; border-color: rgba(255, 152, 0, 0.3); background: rgba(255, 152, 0, 0.08);">
+                    <span class="pp-status-dot" style="background: #ff9800;"></span>
+                    Work In Progress
                 </div>
                 <h1 class="pp-hero-title animate-item">
-                    Spell-Based <span class="gradient-text">Player Controller</span>
+                    Spell-Based <span class="gradient-text">Player Controller</span> <span style="font-size: 0.5em; vertical-align: middle; color: #ff9800; font-weight: 500;">(Just Begun)</span>
                 </h1>
                 <p class="pp-hero-description animate-item">
-                    A highly responsive character controller enabling dynamic projectile, beam, and area-of-effect spells. Custom casting physics, velocity formulas, and dynamic variables adjustable in real-time.
+                    A highly responsive character controller enabling dynamic projectile, beam, and area-of-effect spells. Custom casting physics, velocity formulas, and dynamic variables adjustable in real-time. This project is currently in its early stages of development.
                 </p>
                 <div class="pp-hero-tags animate-item">
                     <span>C#</span>
                     <span>Unity</span>
                     <span>Gameplay Physics</span>
-                    <span>Interactive Sandbox</span>
+                    <span style="color: #ff9800; border-color: #ff9800;">WIP</span>
                 </div>
             </div>
         </section>
@@ -121,9 +127,6 @@
                         </p>
                         <p>
                             The core architecture uses a decoupling methodology: the Player Controller handles locomotion, state machines, and input processing, while a modular Spell Casting Component manages casting states, cooldowns, and instantiates customizable physical spells.
-                        </p>
-                        <p>
-                            To demonstrate how casting variables affect gameplay feel and physics logic, you can interact with the **Spell Sandbox Simulation** below. Change casting properties and cast spells dynamically!
                         </p>
                     </div>
                     <div class="pp-overview-stats">
@@ -151,156 +154,79 @@
             </div>
         </section>
 
-        <!-- Sandbox Section -->
-        <section class="pp-section scroll-reveal" id="pp-sandbox" style="background: rgba(7, 7, 10, 0.4); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+        <!-- Mechanics Section -->
+        <section class="pp-section scroll-reveal" id="pp-mechanics" style="background: rgba(7, 7, 10, 0.4); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
             <div class="container">
                 <div class="section-header text-center">
-                    <span class="section-tag">02. Interactive Sandbox</span>
-                    <h2 class="section-title">Spell Simulation & Variable Tuner</h2>
+                    <span class="section-tag">02. Gameplay Mechanics</span>
+                    <h2 class="section-title">Dynamic Variable Cast System</h2>
                     <div class="section-bar center"></div>
                 </div>
 
-                <div class="sandbox-grid">
-                    <!-- Left: Control Panel -->
-                    <div class="sandbox-controls">
-                        <h3>Tuning Panel</h3>
-                        <p class="panel-subtitle">Change variables to update physics & casting behavior.</p>
+                <div style="max-width: 800px; margin: 40px auto 0 auto;">
+                    <p style="color: var(--text-secondary); text-align: center; font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px;">
+                        Built for a fast-paced movement system, this controller merges fluid locomotion with a tactical, high-risk casting loop. Instead of selecting static spells, you actively shape casting physics in real-time, utilizing your limited mana pool to prioritize the stats your immediate situation demands.
+                    </p>
 
-                        <div class="control-group">
-                            <label for="spell-type">Spell Type</label>
-                            <select id="spell-type" class="sandbox-select">
-                                <option value="fireball">Fireball (Projectile)</option>
-                                <option value="lightning">Lightning Beam (Raycast)</option>
-                                <option value="meteor">Meteor (Gravity AoE)</option>
-                            </select>
-                        </div>
-
-                        <div class="control-group">
-                            <div class="label-val-wrapper">
-                                <label for="cast-speed">Cast Time (seconds)</label>
-                                <span id="cast-speed-val">0.3s</span>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
+                        <!-- Velocity Card -->
+                        <div class="badge-card" style="padding: 24px; display: flex; flex-direction: column; gap: 12px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-md);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="color: var(--accent-primary); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: bold; background: rgba(6, 182, 212, 0.08); padding: 4px 10px; border-radius: var(--radius-sm); border: 1px solid rgba(6, 182, 212, 0.2);">
+                                    Hold Left-Click
+                                </div>
                             </div>
-                            <input type="range" id="cast-speed" min="0.05" max="1.5" step="0.05" value="0.3" class="sandbox-slider">
+                            <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600; margin: 0; color: var(--text-primary);">Spell Velocity</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                                Accelerates the projectile flight speed, flattening gravity-based arcs and hitting distant targets faster.
+                            </p>
                         </div>
 
-                        <div class="control-group">
-                            <div class="label-val-wrapper">
-                                <label for="spell-size">Spell Radius (meters)</label>
-                                <span id="spell-size-val">2.5m</span>
+                        <!-- Size Card -->
+                        <div class="badge-card" style="padding: 24px; display: flex; flex-direction: column; gap: 12px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-md);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="color: var(--accent-primary); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: bold; background: rgba(6, 182, 212, 0.08); padding: 4px 10px; border-radius: var(--radius-sm); border: 1px solid rgba(6, 182, 212, 0.2);">
+                                    Hold Right-Click
+                                </div>
                             </div>
-                            <input type="range" id="spell-size" min="1.0" max="8.0" step="0.2" value="2.5" class="sandbox-slider">
+                            <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600; margin: 0; color: var(--text-primary);">Spell Size</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                                Scales up the physical volume and collision radius, ensuring impact coverage over a wider visual area.
+                            </p>
                         </div>
 
-                        <div class="control-group" id="velocity-group">
-                            <div class="label-val-wrapper">
-                                <label for="spell-velocity">Projectile Velocity (m/s)</label>
-                                <span id="spell-velocity-val">15m/s</span>
+                        <!-- Intensity Card -->
+                        <div class="badge-card" style="padding: 24px; display: flex; flex-direction: column; gap: 12px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-md);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="color: var(--accent-primary); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: bold; background: rgba(6, 182, 212, 0.08); padding: 4px 10px; border-radius: var(--radius-sm); border: 1px solid rgba(6, 182, 212, 0.2);">
+                                    Hold Shift
+                                </div>
                             </div>
-                            <input type="range" id="spell-velocity" min="5" max="30" step="1" value="15" class="sandbox-slider">
-                        </div>
-
-                        <div class="control-group" id="gravity-group" style="display: none;">
-                            <div class="label-val-wrapper">
-                                <label for="spell-gravity">Fall Gravity (G-Force)</label>
-                                <span id="spell-gravity-val">9.8m/s²</span>
-                            </div>
-                            <input type="range" id="spell-gravity" min="0" max="30" step="1" value="10" class="sandbox-slider">
-                        </div>
-
-                        <button id="reset-sandbox" class="btn btn-secondary" style="width: 100%; margin-top: 15px;">Reset Simulation</button>
-                    </div>
-
-                    <!-- Center: Visual Simulation Canvas -->
-                    <div class="sandbox-visual">
-                        <div class="canvas-header">
-                            <span class="canvas-status"><span class="pulse-dot"></span> LIVE VIEW</span>
-                            <span class="canvas-instructions">Use WASD to Move, Click to Cast Spell</span>
-                        </div>
-                        <div class="canvas-wrapper">
-                            <canvas id="spell-sandbox-canvas"></canvas>
+                            <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600; margin: 0; color: var(--text-primary);">Spell Intensity</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                                Amplifies the core payload force or damage yield, releasing a much more explosive energy release upon impact.
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Right: Live Code Viewer -->
-                    <div class="sandbox-code">
-                        <h3>C# Unity Code Output</h3>
-                        <p class="panel-subtitle">Dynamic ScriptableObject config matching current variables.</p>
-                        <div class="code-container">
-                            <pre><code id="live-code-block">
-[CreateAssetMenu(fileName = "SpellConfig", menuName = "Spells/Config")]
-public class SpellData : ScriptableObject 
-{
-    public SpellType type = SpellType.Projectile;
-    public float castTime = <span class="code-number" id="code-cast">0.30f</span>;
-    public float radius = <span class="code-number" id="code-radius">2.50f</span>;
-    public float velocity = <span class="code-number" id="code-velocity">15.0f</span>;
-    public float gravityMultiplier = <span class="code-number" id="code-gravity">1.00f</span>;
-
-    // Instantiated at Runtime
-    public GameObject spellPrefab;
-}
-                            </code></pre>
+                    <!-- Mana Limitation Highlight -->
+                    <div style="margin-top: 30px; padding: 20px 24px; border-radius: var(--radius-md); border: 1px dashed rgba(255, 152, 0, 0.3); background: rgba(255, 152, 0, 0.03); display: flex; align-items: center; gap: 16px;">
+                        <div style="color: #ff9800; flex-shrink: 0;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 28px; height: 28px;">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                        <div style="text-align: left;">
+                            <h5 style="font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 600; margin: 0 0 4px 0; color: var(--text-primary);">Mana Constraints & Decision Making</h5>
+                            <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.4;">
+                                Every millisecond spent holding down these inputs to tune variables drains your maximum mana pool. You are forced to choose what variable to tweak the most and optimize the casting outcome before your resource reserves completely deplete.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Technical Details -->
-        <section class="pp-section scroll-reveal" id="pp-technical">
-            <div class="container">
-                <div class="section-header text-center">
-                    <span class="section-tag">03. Technical</span>
-                    <h2 class="section-title">Under the Hood</h2>
-                    <div class="section-bar center"></div>
-                </div>
-
-                <div class="pp-tech-grid">
-                    <div class="pp-tech-card">
-                        <div class="pp-tech-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                <line x1="8" y1="21" x2="16" y2="21"></line>
-                                <line x1="12" y1="17" x2="12" y2="21"></line>
-                            </svg>
-                        </div>
-                        <h4>Engine</h4>
-                        <p>Unity 2022+ with Input System Package</p>
-                    </div>
-                    <div class="pp-tech-card">
-                        <div class="pp-tech-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="16 18 22 12 16 6"></polyline>
-                                <polyline points="8 6 2 12 8 18"></polyline>
-                            </svg>
-                        </div>
-                        <h4>Language</h4>
-                        <p>C# with custom Physics Cast systems</p>
-                    </div>
-                    <div class="pp-tech-card">
-                        <div class="pp-tech-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                                <polyline points="2 17 12 22 22 17"></polyline>
-                                <polyline points="2 12 12 17 22 12"></polyline>
-                            </svg>
-                        </div>
-                        <h4>Patterns</h4>
-                        <p>State Pattern, Command Pattern, Object Pooling</p>
-                    </div>
-                    <div class="pp-tech-card">
-                        <div class="pp-tech-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="3"></circle>
-                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                            </svg>
-                        </div>
-                        <h4>Configuration</h4>
-                        <p>Dynamic ScriptableObjects with inspector presets</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!-- CTA Section -->
         <section class="pp-section pp-cta-section scroll-reveal" id="pp-return">
@@ -360,6 +286,5 @@ public class SpellData : ScriptableObject
 
     <!-- JavaScript Files -->
     <script src="app.js"></script>
-    <script src="spell-controller.js"></script>
 </body>
 </html>
