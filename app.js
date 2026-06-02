@@ -547,7 +547,76 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
-    // 10. Clickable Project Cards Engine
+    // 10. Project Slider Engine
+    // --------------------------------------------------------------------------
+    const sliderTrack = document.getElementById('project-slider-track');
+    const prevBtn = document.getElementById('project-prev-btn');
+    const nextBtn = document.getElementById('project-next-btn');
+    const paginationContainer = document.getElementById('project-slider-pagination');
+
+    if (sliderTrack && prevBtn && nextBtn && paginationContainer) {
+        const cards = sliderTrack.querySelectorAll('.project-card');
+        const cardCount = cards.length;
+        let currentIndex = 0;
+
+        // Generate pagination dots dynamically
+        paginationContainer.innerHTML = '';
+        for (let i = 0; i < cardCount; i++) {
+            const dot = document.createElement('span');
+            dot.classList.add('pagination-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.setAttribute('data-index', i);
+            paginationContainer.appendChild(dot);
+
+            dot.addEventListener('click', () => {
+                goToSlide(i);
+            });
+        }
+
+        const dots = paginationContainer.querySelectorAll('.pagination-dot');
+
+        function updateSliderControls() {
+            // Peek math: Slide width is 85%, Gap is 5% (total spacing = 90%)
+            // Centering offset for first slide is (100% - 85%) / 2 = 7.5%
+            const slideSpacing = 90;
+            const centerOffset = 7.5;
+            sliderTrack.style.transform = `translateX(calc(${centerOffset}% - ${currentIndex * slideSpacing}%))`;
+
+            // Enable/disable arrows
+            prevBtn.disabled = (currentIndex === 0);
+            nextBtn.disabled = (currentIndex === cardCount - 1);
+
+            // Update active dot
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentIndex);
+            });
+
+            // Update active card class for scale/opacity transitions
+            cards.forEach((card, idx) => {
+                card.classList.toggle('active', idx === currentIndex);
+            });
+        }
+
+        function goToSlide(index) {
+            if (index < 0 || index >= cardCount) return;
+            currentIndex = index;
+            updateSliderControls();
+        }
+
+        prevBtn.addEventListener('click', () => {
+            goToSlide(currentIndex - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            goToSlide(currentIndex + 1);
+        });
+
+        // Initialize state
+        updateSliderControls();
+    }
+
+    // --------------------------------------------------------------------------
+    // 11. Clickable Project Cards Engine
     // --------------------------------------------------------------------------
     const projectCards = document.querySelectorAll('.project-card[data-href]');
     projectCards.forEach(card => {

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spell-Based Player Controller | Jerrel Martha</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Spell-Based Player Controller | Jerrel Martha">
+    <meta name="description" content="Spell-Based Player Controller — C# game mechanics featuring customizable projectiles, physics-based area-of-effect spells, and dynamic variables adjustable in real-time. By Jerrel Martha.">
+    <meta name="author" content="Jerrel Martha">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/Images/PortfolioFavIcon.jpg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="planet-plunder.css"> <!-- Reuse case study styles -->
+    <link rel="stylesheet" href="spell-controller.css"> <!-- Project specific sandbox styles -->
+</head>
+<body>
+    <!-- Interactive Background Particles -->
+    <div class="background-canvas-wrapper">
+        <canvas id="particle-canvas"></canvas>
+    </div>
+
+    <!-- Floating Navigation Bar -->
+    <header class="header" id="header">
+        <div class="nav-container">
+            <a href="index.html#hero" class="logo" id="nav-logo">
+                <span class="logo-accent">&lt;</span>JM<span class="logo-accent"> /&gt;</span>
+            </a>
+
+            <nav class="nav-links-wrapper" id="nav-menu">
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#projects" class="nav-link active">Projects</a>
+                <a href="index.html#socials" class="nav-link">Socials</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle visual theme" title="Toggle visual theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="index.html#contact" class="btn btn-outline nav-btn">Let's Connect</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" title="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Banner -->
+        <section class="pp-hero" id="pp-hero">
+            <div class="pp-hero-video-wrapper" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.45) 0%, rgba(59, 130, 246, 0.45) 100%), #050508;">
+                <div class="pp-hero-overlay"></div>
+            </div>
+            <div class="container pp-hero-content">
+                <a href="index.html#projects" class="pp-back-link animate-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Projects
+                </a>
+                <div class="pp-hero-badge animate-item" style="color: var(--accent-primary); border-color: rgba(6, 182, 212, 0.3); background: rgba(6, 182, 212, 0.08);">
+                    <span class="pp-status-dot" style="background: var(--accent-primary);"></span>
+                    Active Sandbox Simulation
+                </div>
+                <h1 class="pp-hero-title animate-item">
+                    Spell-Based <span class="gradient-text">Player Controller</span>
+                </h1>
+                <p class="pp-hero-description animate-item">
+                    A highly responsive character controller enabling dynamic projectile, beam, and area-of-effect spells. Custom casting physics, velocity formulas, and dynamic variables adjustable in real-time.
+                </p>
+                <div class="pp-hero-tags animate-item">
+                    <span>C#</span>
+                    <span>Unity</span>
+                    <span>Gameplay Physics</span>
+                    <span>Interactive Sandbox</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section class="pp-section scroll-reveal" id="pp-overview">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">01. Overview</span>
+                    <h2 class="section-title">Character Casting Engine</h2>
+                    <div class="section-bar"></div>
+                </div>
+
+                <div class="pp-overview-grid">
+                    <div class="pp-overview-text">
+                        <p>
+                            In action RPGs and magic-based games, the player controller must feel incredibly fluid and allow complex physics integrations for spell casting. This project showcases a custom C# Unity player controller that handles complex spell physics, casting states, and modular spell definitions.
+                        </p>
+                        <p>
+                            The core architecture uses a decoupling methodology: the Player Controller handles locomotion, state machines, and input processing, while a modular Spell Casting Component manages casting states, cooldowns, and instantiates customizable physical spells.
+                        </p>
+                        <p>
+                            To demonstrate how casting variables affect gameplay feel and physics logic, you can interact with the **Spell Sandbox Simulation** below. Change casting properties and cast spells dynamically!
+                        </p>
+                    </div>
+                    <div class="pp-overview-stats">
+                        <div class="pp-stat-card">
+                            <div class="pp-stat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </div>
+                            <h4>Modular Magic</h4>
+                            <p>Decoupled ScriptableObject spell templates that store payload, behaviors, and visual effects</p>
+                        </div>
+                        <div class="pp-stat-card">
+                            <div class="pp-stat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                </svg>
+                            </div>
+                            <h4>Custom Physics</h4>
+                            <p>Spells support custom gravity factors, drag, bounce physics, and orbital curves</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sandbox Section -->
+        <section class="pp-section scroll-reveal" id="pp-sandbox" style="background: rgba(7, 7, 10, 0.4); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">02. Interactive Sandbox</span>
+                    <h2 class="section-title">Spell Simulation & Variable Tuner</h2>
+                    <div class="section-bar center"></div>
+                </div>
+
+                <div class="sandbox-grid">
+                    <!-- Left: Control Panel -->
+                    <div class="sandbox-controls">
+                        <h3>Tuning Panel</h3>
+                        <p class="panel-subtitle">Change variables to update physics & casting behavior.</p>
+
+                        <div class="control-group">
+                            <label for="spell-type">Spell Type</label>
+                            <select id="spell-type" class="sandbox-select">
+                                <option value="fireball">Fireball (Projectile)</option>
+                                <option value="lightning">Lightning Beam (Raycast)</option>
+                                <option value="meteor">Meteor (Gravity AoE)</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="label-val-wrapper">
+                                <label for="cast-speed">Cast Time (seconds)</label>
+                                <span id="cast-speed-val">0.3s</span>
+                            </div>
+                            <input type="range" id="cast-speed" min="0.05" max="1.5" step="0.05" value="0.3" class="sandbox-slider">
+                        </div>
+
+                        <div class="control-group">
+                            <div class="label-val-wrapper">
+                                <label for="spell-size">Spell Radius (meters)</label>
+                                <span id="spell-size-val">2.5m</span>
+                            </div>
+                            <input type="range" id="spell-size" min="1.0" max="8.0" step="0.2" value="2.5" class="sandbox-slider">
+                        </div>
+
+                        <div class="control-group" id="velocity-group">
+                            <div class="label-val-wrapper">
+                                <label for="spell-velocity">Projectile Velocity (m/s)</label>
+                                <span id="spell-velocity-val">15m/s</span>
+                            </div>
+                            <input type="range" id="spell-velocity" min="5" max="30" step="1" value="15" class="sandbox-slider">
+                        </div>
+
+                        <div class="control-group" id="gravity-group" style="display: none;">
+                            <div class="label-val-wrapper">
+                                <label for="spell-gravity">Fall Gravity (G-Force)</label>
+                                <span id="spell-gravity-val">9.8m/s²</span>
+                            </div>
+                            <input type="range" id="spell-gravity" min="0" max="30" step="1" value="10" class="sandbox-slider">
+                        </div>
+
+                        <button id="reset-sandbox" class="btn btn-secondary" style="width: 100%; margin-top: 15px;">Reset Simulation</button>
+                    </div>
+
+                    <!-- Center: Visual Simulation Canvas -->
+                    <div class="sandbox-visual">
+                        <div class="canvas-header">
+                            <span class="canvas-status"><span class="pulse-dot"></span> LIVE VIEW</span>
+                            <span class="canvas-instructions">Use WASD to Move, Click to Cast Spell</span>
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="spell-sandbox-canvas"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Code Viewer -->
+                    <div class="sandbox-code">
+                        <h3>C# Unity Code Output</h3>
+                        <p class="panel-subtitle">Dynamic ScriptableObject config matching current variables.</p>
+                        <div class="code-container">
+                            <pre><code id="live-code-block">
+[CreateAssetMenu(fileName = "SpellConfig", menuName = "Spells/Config")]
+public class SpellData : ScriptableObject 
+{
+    public SpellType type = SpellType.Projectile;
+    public float castTime = <span class="code-number" id="code-cast">0.30f</span>;
+    public float radius = <span class="code-number" id="code-radius">2.50f</span>;
+    public float velocity = <span class="code-number" id="code-velocity">15.0f</span>;
+    public float gravityMultiplier = <span class="code-number" id="code-gravity">1.00f</span>;
+
+    // Instantiated at Runtime
+    public GameObject spellPrefab;
+}
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Details -->
+        <section class="pp-section scroll-reveal" id="pp-technical">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">03. Technical</span>
+                    <h2 class="section-title">Under the Hood</h2>
+                    <div class="section-bar center"></div>
+                </div>
+
+                <div class="pp-tech-grid">
+                    <div class="pp-tech-card">
+                        <div class="pp-tech-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+                        <h4>Engine</h4>
+                        <p>Unity 2022+ with Input System Package</p>
+                    </div>
+                    <div class="pp-tech-card">
+                        <div class="pp-tech-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                        </div>
+                        <h4>Language</h4>
+                        <p>C# with custom Physics Cast systems</p>
+                    </div>
+                    <div class="pp-tech-card">
+                        <div class="pp-tech-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                        </div>
+                        <h4>Patterns</h4>
+                        <p>State Pattern, Command Pattern, Object Pooling</p>
+                    </div>
+                    <div class="pp-tech-card">
+                        <div class="pp-tech-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                        </div>
+                        <h4>Configuration</h4>
+                        <p>Dynamic ScriptableObjects with inspector presets</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="pp-section pp-cta-section scroll-reveal" id="pp-return">
+            <div class="container pp-cta-wrapper" style="max-width: 700px; margin: 0 auto; text-align: center;">
+                <h2 class="pp-cta-title">Explore More Projects</h2>
+                <p class="pp-cta-description">
+                    Check out how code architecture works in full game scopes. You can view all my code source repositories on GitHub.
+                </p>
+                <div class="pp-cta-buttons">
+                    <a href="https://github.com/JerrelMartha" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        View GitHub Codebase
+                    </a>
+                    <a href="index.html#projects" class="btn btn-secondary">Return to Portfolio</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-accent">&lt;</span>JM<span class="logo-accent"> /&gt;</span>
+                </a>
+                <p>Designing modern, responsive experiences across the digital stack.</p>
+            </div>
+
+            <div class="footer-social-wrapper">
+                <a href="https://github.com/JerrelMartha" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="GitHub Profile">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="LinkedIn Profile">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="footer-copyright">
+                <p>&copy; 2026 Jerrel Martha. Developed with vanilla principles.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top-btn" aria-label="Back to top" title="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+    </button>
+
+    <!-- JavaScript Files -->
+    <script src="app.js"></script>
+    <script src="spell-controller.js"></script>
+</body>
+</html>

@@ -763,10 +763,108 @@ html[data-theme="light"] .skill-progress-bar {
 /* --------------------------------------------------------------------------
    09. Projects Grid & Dynamic Hover Effects
    -------------------------------------------------------------------------- */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+.projects-slider-container {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.projects-slider-viewport {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 30px 0;
+}
+
+.projects-slider-track {
+    display: flex;
+    gap: 5%;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    width: 100%;
+}
+
+.projects-slider-track .project-card {
+    flex: 0 0 85%;
+    width: 85%;
+    box-sizing: border-box;
+    transform: scale(0.92);
+    opacity: 0.35;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+    pointer-events: none;
+}
+
+.projects-slider-track .project-card.active {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--card-border);
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    z-index: 15;
+}
+
+.slider-arrow.prev {
+    left: 20px;
+}
+
+.slider-arrow.next {
+    right: 20px;
+}
+
+.slider-arrow:hover:not(:disabled) {
+    border-color: var(--accent-primary);
+    background: var(--accent-gradient);
+    color: #ffffff;
+    box-shadow: 0 0 16px var(--accent-primary);
+    transform: translateY(-50%) scale(1.08);
+}
+
+.slider-arrow:disabled {
+    opacity: 0.15;
+    cursor: not-allowed;
+}
+
+.slider-arrow svg {
+    width: 24px;
+    height: 24px;
+}
+
+.slider-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.pagination-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--card-border);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.pagination-dot.active {
+    background: var(--accent-primary);
+    transform: scale(1.25);
+    box-shadow: 0 0 8px var(--accent-primary);
 }
 
 .project-card {
@@ -776,28 +874,30 @@ html[data-theme="light"] .skill-progress-bar {
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: var(--card-glow);
-    transition: all var(--transition-smooth);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: stretch;
+    height: 400px;
     cursor: pointer;
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(6, 182, 212, 0.25);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    border-color: rgba(6, 182, 212, 0.35);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.45);
 }
 
 /* Project Visual Media & Gradients */
 .project-card-image-placeholder,
 .project-card-media {
-    height: 200px;
+    width: 55%;
+    height: 100%;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     background: #09090f;
+    flex-shrink: 0;
 }
 
 .project-video {
@@ -865,10 +965,13 @@ html[data-theme="light"] .skill-progress-bar {
 }
 
 .project-card-content {
-    padding: 24px;
+    padding: 32px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     flex-grow: 1;
+    width: 45%;
+    box-sizing: border-box;
 }
 
 .project-tags {
@@ -916,6 +1019,38 @@ html[data-theme="light"] .skill-progress-bar {
 
 .project-text-link:hover {
     color: var(--accent-secondary);
+}
+
+@media (max-width: 950px) {
+    .project-card {
+        flex-direction: column;
+        height: auto;
+    }
+    .project-card-media {
+        width: 100%;
+        height: 240px;
+    }
+    .project-card-content {
+        width: 100%;
+        padding: 30px;
+    }
+    .projects-slider-track .project-card {
+        flex: 0 0 90%;
+        width: 90%;
+    }
+}
+
+@media (max-width: 650px) {
+    .slider-arrow.prev {
+        left: 8px;
+    }
+    .slider-arrow.next {
+        right: 8px;
+    }
+    .projects-slider-track .project-card {
+        flex: 0 0 94%;
+        width: 94%;
+    }
 }
 
 /* --------------------------------------------------------------------------
