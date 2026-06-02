@@ -545,4 +545,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // --------------------------------------------------------------------------
+    // 10. Clickable Project Cards Engine
+    // --------------------------------------------------------------------------
+    const projectCards = document.querySelectorAll('.project-card[data-href]');
+    projectCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Prevent navigation if clicking on a nested interactive element
+            if (e.target.closest('a') || e.target.closest('button')) {
+                return;
+            }
+            const destination = card.getAttribute('data-href');
+            if (destination) {
+                window.location.href = destination;
+            }
+        });
+    });
 });
