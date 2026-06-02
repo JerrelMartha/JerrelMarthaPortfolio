@@ -34,8 +34,8 @@
 
             <nav class="nav-links-wrapper" id="nav-menu">
                 <a href="index.html#about" class="nav-link">About</a>
-                <a href="index.html#skills" class="nav-link">Skills</a>
                 <a href="index.html#projects" class="nav-link active">Projects</a>
+                <a href="index.html#socials" class="nav-link">Socials</a>
                 <a href="index.html#contact" class="nav-link">Contact</a>
             </nav>
 
@@ -72,8 +72,7 @@
         <!-- Hero Banner -->
         <section class="pp-hero" id="pp-hero">
             <div class="pp-hero-video-wrapper">
-                <video class="pp-hero-video" autoplay loop muted playsinline>
-                    <source src="assets/planet-plunder.mp4" type="video/mp4">
+                <video class="pp-hero-video" autoplay loop muted playsinline preload="none" data-src="assets/planet-plunder.mp4">
                 </video>
                 <div class="pp-hero-overlay"></div>
             </div>
@@ -85,9 +84,9 @@
                     </svg>
                     Back to Projects
                 </a>
-                <div class="pp-hero-badge animate-item">
-                    <span class="pp-status-dot"></span>
-                    In Development
+                <div class="pp-hero-badge animate-item" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08);">
+                    <span class="pp-status-dot" style="background: #ef4444; animation: none;"></span>
+                    Project Abandoned
                 </div>
                 <h1 class="pp-hero-title animate-item">
                     Planet <span class="gradient-text">Plunder</span>
@@ -122,7 +121,7 @@
                             The core gameplay loop revolves around landing on a planet, navigating its terrain, gathering materials, and investing earned progress into a deep skill tree system that unlocks new abilities, upgrades, and exploration strategies.
                         </p>
                         <p>
-                            The game is currently under active development as a personal project, showcasing my skills in gameplay programming, procedural content generation, and systems architecture within Unity.
+                            The game is an archived personal prototype, showcasing my skills in gameplay programming, procedural content generation, and systems architecture within Unity.
                         </p>
                     </div>
                     <div class="pp-overview-stats">
@@ -171,7 +170,7 @@
                 </div>
 
                 <div class="pp-feature-content">
-                    <div class="pp-feature-text">
+                    <div class="pp-feature-text" style="max-width: 800px; margin: 0 auto;">
                         <h3>Every Planet Tells a Different Story</h3>
                         <p>
                             The procedural generation system creates unique planetary surfaces by layering noise algorithms, biome distribution rules, and resource placement logic. Terrain elevation, vegetation density, hazard zones, and points of interest are all determined algorithmically at runtime.
@@ -195,13 +194,6 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="pp-feature-media">
-                        <!-- Replace src with your actual screenshot or video -->
-                        <div class="pp-media-placeholder">
-                            <img src="assets/planet-plunder-procgen.png" alt="Procedural generation in Planet Plunder showing terrain and biome variety" class="pp-feature-image">
-                        </div>
-                        <span class="pp-media-caption">Procedurally generated terrain with biome variations</span>
-                    </div>
                 </div>
             </div>
         </section>
@@ -215,8 +207,8 @@
                     <div class="section-bar center"></div>
                 </div>
 
-                <div class="pp-feature-content pp-feature-reverse">
-                    <div class="pp-feature-text">
+                <div class="pp-feature-content">
+                    <div class="pp-feature-text" style="max-width: 800px; margin: 0 auto;">
                         <h3>Shape Your Playstyle</h3>
                         <p>
                             The skill tree provides meaningful progression choices. As players complete expeditions and earn experience, they unlock nodes across multiple branches — each focusing on different gameplay pillars like traversal, combat efficiency, resource detection, and survival.
@@ -239,62 +231,28 @@
                                 Visual node graph rendered in-game with real-time feedback
                             </li>
                         </ul>
-                    </div>
-                    <div class="pp-feature-media">
-                        <!-- Replace src with your actual screenshot or video -->
-                        <div class="pp-media-placeholder">
-                            <img src="assets/planet-plunder-skilltree.png" alt="Skill tree interface in Planet Plunder showing branching upgrade paths" class="pp-feature-image">
+
+                        <!-- Save System Callout -->
+                        <div class="pp-save-callout" style="margin-top: 32px; padding: 24px; background: rgba(163, 230, 53, 0.05); border: 1px solid rgba(163, 230, 53, 0.2); border-radius: var(--radius-md); display: flex; gap: 16px; align-items: flex-start; text-align: left;">
+                            <div style="color: var(--accent-primary); flex-shrink: 0;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 28px; height: 28px;">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                    <polyline points="7 3 7 8 15 8"></polyline>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; color: var(--text-primary);">Robust Save State Integration</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin: 0; font-weight: 300;">
+                                    Every individual player statistic, unlocked node in the branching skill tree, and gathered planetary resource is dynamically serialized and captured by the custom persistence save system, keeping your progression fully secured between expeditions.
+                                </p>
+                            </div>
                         </div>
-                        <span class="pp-media-caption">Branching skill tree with multiple specialization paths</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Gallery / Media Section -->
-        <section class="pp-section scroll-reveal" id="pp-gallery">
-            <div class="container">
-                <div class="section-header text-center">
-                    <span class="section-tag">04. Gallery</span>
-                    <h2 class="section-title">Screenshots & Gameplay</h2>
-                    <div class="section-bar center"></div>
-                </div>
-
-                <div class="pp-gallery-grid">
-                    <!-- Gallery Item 1: Video -->
-                    <div class="pp-gallery-item pp-gallery-wide">
-                        <video class="pp-gallery-video" autoplay loop muted playsinline>
-                            <source src="assets/planet-plunder.mp4" type="video/mp4">
-                        </video>
-                        <div class="pp-gallery-label">Gameplay Footage</div>
-                    </div>
-
-                    <!-- Gallery Item 2: Screenshot -->
-                    <div class="pp-gallery-item">
-                        <img src="assets/planet-plunder-screenshot-1.png" alt="Planet Plunder gameplay screenshot 1" class="pp-gallery-image">
-                        <div class="pp-gallery-label">Exploration</div>
-                    </div>
-
-                    <!-- Gallery Item 3: Screenshot -->
-                    <div class="pp-gallery-item">
-                        <img src="assets/planet-plunder-screenshot-2.png" alt="Planet Plunder gameplay screenshot 2" class="pp-gallery-image">
-                        <div class="pp-gallery-label">Resource Gathering</div>
-                    </div>
-
-                    <!-- Gallery Item 4: Screenshot -->
-                    <div class="pp-gallery-item">
-                        <img src="assets/planet-plunder-screenshot-3.png" alt="Planet Plunder gameplay screenshot 3" class="pp-gallery-image">
-                        <div class="pp-gallery-label">Planet Surface</div>
-                    </div>
-
-                    <!-- Gallery Item 5: Screenshot -->
-                    <div class="pp-gallery-item">
-                        <img src="assets/planet-plunder-screenshot-4.png" alt="Planet Plunder gameplay screenshot 4" class="pp-gallery-image">
-                        <div class="pp-gallery-label">Skill Tree UI</div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!-- Technical Details -->
         <section class="pp-section scroll-reveal" id="pp-technical">
@@ -352,16 +310,36 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="pp-section pp-cta-section scroll-reveal">
-            <div class="container pp-cta-wrapper">
-                <h2 class="pp-cta-title">Interested in Planet Plunder?</h2>
-                <p class="pp-cta-description">
-                    The game is still under active development. Feel free to reach out if you would like to discuss the technical implementation, follow the project's progress, or collaborate.
+        <!-- CTA Section / Download Center -->
+        <section class="pp-section pp-cta-section scroll-reveal" id="pp-download">
+            <div class="container pp-cta-wrapper" style="max-width: 700px; margin: 0 auto; text-align: center;">
+                <h2 class="pp-cta-title" style="font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 16px;">Play Planet Plunder</h2>
+                
+                <!-- Abandoned Project Clarification -->
+                <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; padding: 8px 16px; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: var(--radius-full); font-size: 0.85rem; color: #ef4444; font-family: 'JetBrains Mono', monospace;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    Project Status: Abandoned & Archived
+                </div>
+
+                <p class="pp-cta-description" style="font-size: 1rem; color: var(--text-secondary); line-height: 1.7; font-weight: 300; margin-bottom: 24px;">
+                    Although active development has been permanently halted, a fully functional prototype build containing the procedural generation pipeline and the interactive skill tree system remains archived and accessible.
                 </p>
-                <div class="pp-cta-buttons">
-                    <a href="index.html#contact" class="btn btn-primary">Get in Touch</a>
-                    <a href="index.html#projects" class="btn btn-secondary">View Other Projects</a>
+
+                <!-- Playable Build Notification -->
+                <p style="font-size: 0.95rem; color: var(--accent-primary); font-weight: 500; font-family: 'Outfit', sans-serif; margin-bottom: 16px;">
+                    You are downloading a playable standalone desktop build (v0.9 alpha) of Planet Plunder.
+                </p>
+
+                <div class="pp-cta-buttons" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                    <a href="assets/Downloadables/PlanetPlunder v0.9.zip" download class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download Game Build (.ZIP)
+                    </a>
+                    <a href="https://github.com/JerrelMartha/Planet-Plunder" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 10px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        View Source Code
+                    </a>
+                    <a href="index.html#projects" class="btn btn-secondary">Return to Portfolio</a>
                 </div>
             </div>
         </section>

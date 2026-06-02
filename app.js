@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check localStorage or system preference
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
+
     if (savedTheme) {
         htmlElement.setAttribute('data-theme', savedTheme);
     } else {
@@ -24,10 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggleBtn.addEventListener('click', () => {
         const currentTheme = htmlElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
+
         htmlElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        
+
         // Re-initialize particles if needed or update their color palette
         if (typeof reinitializeParticleColors === 'function') {
             reinitializeParticleColors();
@@ -35,12 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
-    // 02. Interactive Canvas Particles Background
+    // 02. Interactive Mana Wisps & Floating Runes Background
     // --------------------------------------------------------------------------
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
     let particlesArray = [];
-    let mouse = { x: null, y: null, radius: 120 };
+    let stardustArray = [];
+    let mouse = { x: null, y: null, radius: 150 };
 
     // Setup dimensions
     function resizeCanvas() {
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Track mouse position only on desktop
+    // Track mouse position
     window.addEventListener('mousemove', (event) => {
         mouse.x = event.x;
         mouse.y = event.y;
@@ -61,117 +62,267 @@ document.addEventListener('DOMContentLoaded', () => {
         mouse.y = null;
     });
 
-    // Particle Object Blueprint
-    class Particle {
-        constructor(x, y, directionX, directionY, size, color) {
+    const runesList = ["ᚠ", "ᚢ", "ᚦ", "ᚨ", "ᚱ", "ᚲ", "ᚷ", "ᚹ", "ᚺ", "ᚾ", "ᛁ", "ᛃ", "ᛇ", "ᛈ", "ᛉ", "ᛊ", "ᛏ", "ᛒ", "ᛖ", "ᛗ", "ᛚ", "ᛜ", "ᛞ", "ᛟ"];
+
+    class StardustTrail {
+        constructor(x, y, color) {
             this.x = x;
             this.y = y;
-            this.directionX = directionX;
-            this.directionY = directionY;
-            this.size = size;
+            this.size = Math.random() * 1.5 + 0.4;
+            this.alpha = 1;
+            this.decay = Math.random() * 0.015 + 0.01;
             this.color = color;
         }
-
-        // Draw individual node
+        update() {
+            this.alpha -= this.decay;
+        }
         draw() {
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fillStyle = this.color;
+            ctx.shadowBlur = 4;
+            ctx.shadowColor = this.color;
             ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    // Trigger magical shockwave on click
+    window.addEventListener('click', (event) => {
+        // Skip clicks on active buttons or links
+        if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON' || event.target.closest('a') || event.target.closest('button')) {
+            return;
         }
 
-        // Update positions & bounds checks
-        update() {
-            if (this.x > canvas.width || this.x < 0) {
-                this.directionX = -this.directionX;
+        const clickX = event.clientX;
+        const clickY = event.clientY;
+        const shockwaveRadius = 260;
+        const pushForce = 18;
+
+        particlesArray.forEach(p => {
+            let dx = p.x - clickX;
+            let dy = p.y - clickY;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < shockwaveRadius) {
+                let force = (shockwaveRadius - distance) / shockwaveRadius;
+                // Outward radial acceleration surge
+                p.speedX += (dx / distance) * force * pushForce;
+                p.speedY += (dy / distance) * force * pushForce;
+
+                // Boost size and brightness temporarily under pressure
+                p.size = Math.min(p.isRune ? 22 : 14, p.size + force * 4);
+                p.alpha = Math.min(0.8, p.alpha + force * 0.3);
             }
-            if (this.y > canvas.height || this.y < 0) {
-                this.directionY = -this.directionY;
+        });
+    });
+
+    class MagicParticle {
+        constructor(isRune = false) {
+            this.isRune = isRune;
+            this.reset(true);
+        }
+
+        reset(initial = false) {
+            this.x = Math.random() * canvas.width;
+            this.y = initial ? (Math.random() * canvas.height) : (canvas.height + 20);
+
+            this.baseSize = this.isRune ? (Math.random() * 6 + 10) : (Math.random() * 3 + 2);
+            this.size = this.baseSize;
+
+            // Base drift speeds
+            this.targetSpeedY = -(Math.random() * 0.5 + 0.3);
+            this.targetSpeedX = (Math.random() * 0.4) - 0.2;
+
+            this.speedY = this.targetSpeedY;
+            this.speedX = this.targetSpeedX;
+
+            this.angle = Math.random() * Math.PI * 2;
+            this.spinSpeed = (Math.random() * 0.02) - 0.01;
+
+            this.baseAlpha = Math.random() * 0.4 + 0.15;
+            this.alpha = this.baseAlpha;
+
+            if (this.isRune) {
+                this.runeChar = runesList[Math.floor(Math.random() * runesList.length)];
             }
 
-            // Mouse interact pulling logic
+            // Oscillation variables
+            this.oscSpeed = Math.random() * 0.02 + 0.01;
+            this.oscAmount = Math.random() * 0.5 + 0.2;
+            this.oscTime = Math.random() * 100;
+        }
+
+        update(themeColor) {
+            this.oscTime += this.oscSpeed;
+
+            // Shrink and dim back to base values gradually
+            if (this.size > this.baseSize) {
+                this.size -= 0.03;
+            }
+            if (this.alpha > this.baseAlpha) {
+                this.alpha -= 0.005;
+            }
+
+            // Dampen/Restore velocity back to base drift speeds (friction)
+            this.speedX = this.speedX * 0.95 + this.targetSpeedX * 0.05;
+            this.speedY = this.speedY * 0.95 + this.targetSpeedY * 0.05;
+
+            // Gravity/Vortex pull to mouse
             if (mouse.x !== null && mouse.y !== null) {
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
                 let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius) {
-                    const force = (mouse.radius - distance) / mouse.radius;
-                    this.x -= dx * force * 0.03;
-                    this.y -= dy * force * 0.03;
+
+                if (distance < mouse.radius * 1.5) {
+                    let force = (mouse.radius * 1.5 - distance) / (mouse.radius * 1.5);
+                    this.speedX += (dx / distance) * force * 0.15;
+                    this.speedY += (dy / distance) * force * 0.15;
+
+                    // Circular orbital swirl bias
+                    this.speedX += -(dy / distance) * force * 0.06;
+                    this.speedY += (dx / distance) * force * 0.06;
                 }
             }
 
-            // Regular float update
-            this.x += this.directionX;
-            this.y += this.directionY;
-            this.draw();
+            // Apply velocities
+            this.y += this.speedY;
+            this.x += this.speedX + Math.sin(this.oscTime) * (this.oscAmount * 0.1);
+
+            // Rotate runes
+            if (this.isRune) {
+                this.angle += this.spinSpeed;
+            }
+
+            // Spawn stardust trails for standard wisps (higher spawn rate when excited!)
+            const trailChance = this.size > this.baseSize ? 0.25 : 0.12;
+            if (!this.isRune && Math.random() < trailChance) {
+                stardustArray.push(new StardustTrail(this.x, this.y, themeColor));
+            }
+
+            // Bound checks
+            if (this.y < -20 || this.x < -20 || this.x > canvas.width + 20) {
+                this.reset(false);
+            }
+        }
+
+        draw(themeColor) {
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.fillStyle = themeColor;
+            ctx.shadowBlur = this.isRune ? 8 : 12;
+            ctx.shadowColor = themeColor;
+
+            if (this.isRune) {
+                // Render rotating ancient rune symbol
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.font = `${this.size}px 'Outfit', -apple-system, sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.runeChar, 0, 0);
+            } else {
+                // Render soft glowing mana wisp
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
         }
     }
 
     // Determine color schemes dynamically
     function getParticleThemeColor() {
         const theme = htmlElement.getAttribute('data-theme');
-        return theme === 'dark' ? 'rgba(6, 182, 212, 0.15)' : 'rgba(13, 148, 136, 0.12)';
+        return theme === 'dark' ? 'rgba(163, 230, 53, 0.4)' : 'rgba(101, 163, 13, 0.35)';
     }
 
-    function getLineThemeColor() {
-        const theme = htmlElement.getAttribute('data-theme');
-        return theme === 'dark' ? 'rgba(139, 92, 246, 0.04)' : 'rgba(124, 58, 237, 0.04)';
-    }
-
-    // Populate particles base on viewport size
-    function initParticles() {
-        particlesArray = [];
-        const numberOfParticles = Math.floor((canvas.width * canvas.height) / 14000);
-        const color = getParticleThemeColor();
-
-        for (let i = 0; i < numberOfParticles; i++) {
-            let size = (Math.random() * 2) + 1;
-            let x = Math.random() * (canvas.width - size * 2) + size;
-            let y = Math.random() * (canvas.height - size * 2) + size;
-            let directionX = (Math.random() * 0.4) - 0.2;
-            let directionY = (Math.random() * 0.4) - 0.2;
-
-            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
-        }
-    }
-
-    // Refresh color when theme changes
-    window.reinitializeParticleColors = () => {
-        const pColor = getParticleThemeColor();
-        particlesArray.forEach(p => p.color = pColor);
-    };
-
-    // Draw connecting paths between adjacent nodes
-    function connectParticles() {
-        let opacityValue = 1;
-        const lineColor = getLineThemeColor();
-        
+    // Magical Fusion logic (when mana wisps collide, one absorbs the other and grows larger/brighter)
+    function checkMagicCollisions() {
         for (let a = 0; a < particlesArray.length; a++) {
-            for (let b = a; b < particlesArray.length; b++) {
-                let dx = particlesArray[a].x - particlesArray[b].x;
-                let dy = particlesArray[a].y - particlesArray[b].y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
+            if (particlesArray[a].isRune) continue;
 
-                if (distance < 120) {
-                    ctx.strokeStyle = lineColor;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                    ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                    ctx.stroke();
+            for (let b = a + 1; b < particlesArray.length; b++) {
+                if (particlesArray[b].isRune) continue;
+
+                let dx = particlesArray[b].x - particlesArray[a].x;
+                let dy = particlesArray[b].y - particlesArray[a].y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                let minDist = particlesArray[a].size + particlesArray[b].size;
+
+                if (distance < minDist) { // Direct overlapping collision
+                    // Determine consumer (larger wisp absorbs smaller wisp)
+                    let consumer = particlesArray[a];
+                    let consumed = particlesArray[b];
+                    if (particlesArray[b].size > particlesArray[a].size) {
+                        consumer = particlesArray[b];
+                        consumed = particlesArray[a];
+                    }
+
+                    // Transfer energy up to a maximum massive size limit of 22px
+                    if (consumer.size < 22) {
+                        consumer.size += consumed.size * 0.45;
+                        consumer.alpha = Math.min(0.9, consumer.alpha + consumed.alpha * 0.25);
+
+                        // Conservation of momentum: blend velocities on impact
+                        consumer.speedX = (consumer.speedX + consumed.speedX) * 0.5;
+                        consumer.speedY = (consumer.speedY + consumed.speedY) * 0.5;
+                    }
+
+                    // Respawn the consumed wisp at the bottom of the screen as new energy
+                    consumed.reset(false);
+
+                    // Break out of inner loop to process the next wisp in the next frame
+                    break;
                 }
             }
         }
     }
 
+    // Populate particles based on viewport size
+    function initParticles() {
+        particlesArray = [];
+        stardustArray = [];
+        const numberOfParticles = Math.floor((canvas.width * canvas.height) / 25000);
+
+        for (let i = 0; i < numberOfParticles; i++) {
+            const isRune = Math.random() < 0.15;
+            particlesArray.push(new MagicParticle(isRune));
+        }
+    }
+
+    // Refresh color when theme changes
+    window.reinitializeParticleColors = () => {
+        initParticles();
+    };
+
     // Animation Loop
     function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].update();
+
+        const themeColor = getParticleThemeColor();
+
+        // Update & Draw stardust trails
+        for (let i = stardustArray.length - 1; i >= 0; i--) {
+            stardustArray[i].update();
+            if (stardustArray[i].alpha <= 0) {
+                stardustArray.splice(i, 1);
+            } else {
+                stardustArray[i].draw();
+            }
         }
-        connectParticles();
+
+        // Run magical energy coalescence
+        checkMagicCollisions();
+
+        // Update & Draw mana wisps and runes
+        for (let i = 0; i < particlesArray.length; i++) {
+            particlesArray[i].update(themeColor);
+            particlesArray[i].draw(themeColor);
+        }
+
         requestAnimationFrame(animateParticles);
     }
 
@@ -187,39 +338,41 @@ document.addEventListener('DOMContentLoaded', () => {
     // 03. Typing Loop Engine
     // --------------------------------------------------------------------------
     const typingSpan = document.getElementById('typing-span');
-    const roles = ["Gameplay Programmer.", "Game Systems Architect.", "Devtools Developer."];
-    let roleIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = 100;
+    if (typingSpan) {
+        const roles = ["Gameplay Programmer.", "Game Systems Architect.", "Devtools Developer."];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
 
-    function typeEffect() {
-        const currentRole = roles[roleIndex];
-        
-        if (isDeleting) {
-            charIndex--;
-            typingSpeed = 50; // faster deletion
-        } else {
-            charIndex++;
-            typingSpeed = 120; // natural typing speed
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+
+            if (isDeleting) {
+                charIndex--;
+                typingSpeed = 50; // faster deletion
+            } else {
+                charIndex++;
+                typingSpeed = 120; // natural typing speed
+            }
+
+            typingSpan.textContent = currentRole.substring(0, charIndex);
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                typingSpeed = 2000; // pause at completion of typing
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typingSpeed = 500; // brief pause before typing next role
+            }
+
+            setTimeout(typeEffect, typingSpeed);
         }
 
-        typingSpan.textContent = currentRole.substring(0, charIndex);
-
-        if (!isDeleting && charIndex === currentRole.length) {
-            typingSpeed = 2000; // pause at completion of typing
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            roleIndex = (roleIndex + 1) % roles.length;
-            typingSpeed = 500; // brief pause before typing next role
-        }
-
-        setTimeout(typeEffect, typingSpeed);
+        // Begin Typing Loop
+        typeEffect();
     }
-    
-    // Begin Typing Loop
-    typeEffect();
 
     // --------------------------------------------------------------------------
     // 04. Reveal on Scroll (Intersection Observer)
@@ -231,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                
+
                 // If it is the skills section, animate progress bars
                 if (entry.target.id === 'skills') {
                     animateSkills();
@@ -266,11 +419,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', () => {
         let currentSectionId = '';
-        
+
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
-            
+
             // Deduct some threshold to make transition natural
             if (window.scrollY >= (sectionTop - 250)) {
                 currentSectionId = section.getAttribute('id');
@@ -353,11 +506,11 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 submitBtn.classList.remove('loading');
                 submitBtn.disabled = false;
-                
+
                 // Set success details
                 formStatus.classList.add('success');
                 formStatus.textContent = "Thank you, Jerrel will get back to you shortly.";
-                
+
                 // Clear fields
                 contactForm.reset();
 
@@ -370,4 +523,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1500);
         });
     }
+
+    // --------------------------------------------------------------------------
+    // 09. Video Lazy-Loading Engine
+    // --------------------------------------------------------------------------
+    const lazyVideos = document.querySelectorAll('video[data-src]');
+
+    // We defer heavy video loads until all core page assets have fully completed loading
+    window.addEventListener('load', () => {
+        lazyVideos.forEach(video => {
+            const dataSrc = video.getAttribute('data-src');
+            if (dataSrc) {
+                const source = document.createElement('source');
+                source.src = dataSrc;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                video.load();
+                video.play().catch(err => {
+                    console.log("Autoplay deferred:", err);
+                });
+            }
+        });
+    });
 });

@@ -47,9 +47,9 @@
 html[data-theme="light"] .pp-hero-overlay {
     background: linear-gradient(
         180deg,
-        rgba(244, 246, 250, 0.3) 0%,
-        rgba(244, 246, 250, 0.6) 50%,
-        rgba(244, 246, 250, 0.95) 100%
+        rgba(203, 213, 225, 0.3) 0%,
+        rgba(203, 213, 225, 0.6) 50%,
+        rgba(203, 213, 225, 0.95) 100%
     );
 }
 
@@ -218,9 +218,8 @@ html[data-theme="light"] .pp-hero-overlay {
    04. Feature Content (Procedural Gen / Skill Tree)
    -------------------------------------------------------------------------- */
 .pp-feature-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
