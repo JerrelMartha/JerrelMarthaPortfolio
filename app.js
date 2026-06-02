@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
     const typingSpan = document.getElementById('typing-span');
     if (typingSpan) {
-        const roles = ["Gameplay Programmer.", "Game Systems Architect.", "Devtools Developer."];
+        const roles = ["Gameplay Programmer.", "Game Systems Architect.", "Unity Developer."];
         let roleIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
